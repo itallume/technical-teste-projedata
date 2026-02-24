@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: 'postgres:15-alpine'
+    container_name: projedata-postgres
+    environment:
+      POSTGRES_DB: projedata
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - projedata-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: projedata-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/projedata
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    networks:
+      - projedata-network
+
+volumes:
+  postgres_data:
+
+networks:
+  projedata-network:
+    driver: bridge

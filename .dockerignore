@@ -1,0 +1,21 @@
+# Ignore development files
+target/
+.mvn/wrapper/maven-wrapper.jar
+.git/
+.idea/
+*.iml
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore logs
+*.log
+
+# Docker files
+Dockerfile
+docker-compose.yaml
+.dockerignore
+
+# Environment files
+Set-JavaEnv.ps1
