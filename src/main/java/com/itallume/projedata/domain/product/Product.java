@@ -2,6 +2,7 @@ package com.itallume.projedata.domain.product;
 
 
 import com.itallume.projedata.domain.rawMaterial.RawMaterial;
+import com.itallume.projedata.domain.rawMaterial.UnitOfMeasurement;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -38,7 +39,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductMaterial> productMaterials = new ArrayList<>();
 
-    public void addProductMaterial(RawMaterial rawMaterial, BigDecimal quantityInBaseUnit) {
+    public void addProductMaterial(RawMaterial rawMaterial, BigDecimal quantity, UnitOfMeasurement unitOfMeasurement) {
 
         boolean alreadyExists = productMaterials.stream()
                 .anyMatch(pm -> pm.getRawMaterial().equals(rawMaterial));
@@ -50,7 +51,8 @@ public class Product {
         ProductMaterial productMaterial = new ProductMaterial();
         productMaterial.setProduct(this);
         productMaterial.setRawMaterial(rawMaterial);
-        productMaterial.setQuantityInBaseUnit(quantityInBaseUnit);
+        productMaterial.setUnitOfMeasurement(unitOfMeasurement);
+        productMaterial.setQuantity(quantity);
 
         this.productMaterials.add(productMaterial);
     }

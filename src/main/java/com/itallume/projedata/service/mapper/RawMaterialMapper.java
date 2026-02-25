@@ -13,18 +13,17 @@ public class RawMaterialMapper {
         RawMaterial rawMaterial = new RawMaterial();
         rawMaterial.setName(request.getName());
         rawMaterial.setCode(request.getCode());
-        rawMaterial.setUnitOfMeasurement(request.getUnitOfMeasurement());
-        rawMaterial.setStock(request.getStockQuantity());
+        rawMaterial.setStockWithUnitOfMeasurement(request.getStockQuantity(), request.getUnitOfMeasurement());
         return rawMaterial;
     }
 
-    public RawMaterialResponse toResponse(RawMaterial rawMaterial) {
+    public RawMaterialResponse toResponse(RawMaterial rawMaterial, UnitOfMeasurement unitOfMeasurement) {
         RawMaterialResponse response = new RawMaterialResponse();
         response.setId(rawMaterial.getId());
         response.setName(rawMaterial.getName());
         response.setCode(rawMaterial.getCode());
-        response.setUnitOfMeasurement(rawMaterial.getUnitOfMeasurement());
-        response.setStockQuantity(rawMaterial.getStock());
+        response.setStockQuantity(rawMaterial.getStockWithUnitOfMeasurement(unitOfMeasurement));
+        response.setUnitOfMeasurement(unitOfMeasurement);
         return response;
     }
 }
