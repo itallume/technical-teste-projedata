@@ -3,9 +3,11 @@ package com.itallume.projedata.domain.product;
 import com.itallume.projedata.domain.rawMaterial.UnitOfMeasurement;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
+@Data
 public class ProductMaterialRequest {
     @NotNull
     private Long materialId;

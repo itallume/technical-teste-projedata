@@ -26,5 +26,5 @@ public class ProductRequest {
     @NotEmpty
     @NotNull
     @Valid
-    private List<ProductMaterial> productMaterials = new ArrayList<>();
+    private List<ProductMaterialRequest> productMaterials = new ArrayList<>();
 }
