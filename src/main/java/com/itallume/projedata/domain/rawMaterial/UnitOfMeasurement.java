@@ -1,6 +1,7 @@
 package com.itallume.projedata.domain.rawMaterial;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public enum UnitOfMeasurement {
 
@@ -17,6 +18,10 @@ public enum UnitOfMeasurement {
 
     UnitOfMeasurement(long multiplier) {
         this.multiplier = BigDecimal.valueOf(multiplier);
+    }
+
+    public BigDecimal fromBase(BigDecimal baseValue) {
+        return baseValue.divide(multiplier, 6, RoundingMode.HALF_UP);
     }
 
     public BigDecimal toBase(BigDecimal value) {
