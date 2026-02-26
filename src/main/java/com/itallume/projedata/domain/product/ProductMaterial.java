@@ -1,7 +1,9 @@
 package com.itallume.projedata.domain.product;
 
+import com.itallume.projedata.domain.rawMaterial.MeasurementType;
 import com.itallume.projedata.domain.rawMaterial.RawMaterial;
 import com.itallume.projedata.domain.rawMaterial.UnitOfMeasurement;
+import com.itallume.projedata.utils.UnitConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -30,13 +32,9 @@ public class ProductMaterial {
     @NotNull
     private RawMaterial rawMaterial;
 
-    private UnitOfMeasurement unitOfMeasurement;
-
     @Column(nullable = false, precision = 19, scale = 4)
     @DecimalMin(value = "0.0", message = "Quantity must be non-negative")
     private BigDecimal quantityInBaseUnit;
-
-
 
     public Long getId() {
         return id;
@@ -62,19 +60,25 @@ public class ProductMaterial {
         this.rawMaterial = rawMaterial;
     }
 
-    public UnitOfMeasurement getUnitOfMeasurement() {
-        return unitOfMeasurement;
+    public BigDecimal getQuantityInBaseUnit() {
+        return quantityInBaseUnit;
     }
 
-    public void setUnitOfMeasurement(UnitOfMeasurement unitOfMeasurement) {
-        this.unitOfMeasurement = unitOfMeasurement;
+    public void setQuantityInBaseUnit(BigDecimal quantityInBaseUnit) {
+        this.quantityInBaseUnit = quantityInBaseUnit;
     }
 
-    public BigDecimal getQuantity() {
-        return unitOfMeasurement.fromBase(quantityInBaseUnit);
+    public UnitOfMeasurement getBestUnitForDisplay() {
+        return UnitConverter.bestUnitForDisplay(
+                this.rawMaterial.getMeasurementType(),
+                this.quantityInBaseUnit
+        );
     }
 
-    public void setQuantity(BigDecimal quantity) {
-        this.quantityInBaseUnit = unitOfMeasurement.toBase(quantity);
+    public BigDecimal getQuantityForDisplay(UnitOfMeasurement unit) {
+        if (unit.getType() != this.rawMaterial.getMeasurementType()){
+            throw new IllegalArgumentException("Unit of measurement type does not match raw material measurement type");
+        }
+        return unit.fromBase(this.quantityInBaseUnit);
     }
 }

@@ -3,9 +3,7 @@ package com.itallume.projedata.domain.rawMaterial;
 import com.itallume.projedata.utils.UnitConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 
@@ -62,18 +60,18 @@ public class RawMaterial {
         this.measurementType = measurementType;
     }
 
-    public BigDecimal getStockWithUnitOfMeasurement(UnitOfMeasurement unitOfMeasurement) {
-        if (unitOfMeasurement.getType() != measurementType){
-            throw new IllegalArgumentException("Unit of measurement type does not match raw material measurement type");
-        }
-        return unitOfMeasurement.fromBase(this.stockQuantityInBaseUnit);
+    public UnitOfMeasurement getBestUnitForDisplay() {
+        return UnitConverter.bestUnitForDisplay(
+                this.measurementType,
+                this.stockQuantityInBaseUnit
+        );
     }
 
-    public void setStockWithUnitOfMeasurement(BigDecimal stockQuantity, UnitOfMeasurement unitOfMeasurement) {
-        if (unitOfMeasurement.getType() != measurementType){
+    public BigDecimal getStockQuantityForDisplay(UnitOfMeasurement unit) {
+        if (unit.getType() != measurementType){
             throw new IllegalArgumentException("Unit of measurement type does not match raw material measurement type");
         }
-        this.stockQuantityInBaseUnit = unitOfMeasurement.toBase(stockQuantity);
+        return unit.fromBase(this.stockQuantityInBaseUnit);
     }
 
     public BigDecimal getStockQuantityInBaseUnit() {
@@ -84,10 +82,5 @@ public class RawMaterial {
         this.stockQuantityInBaseUnit = stockQuantityInBaseUnit;
     }
 
-    public UnitOfMeasurement getBestUnitForDisplay() {
-        return UnitConverter.bestUnit(
-                this.measurementType,
-                this.stockQuantityInBaseUnit
-        );
-    }
+
 }

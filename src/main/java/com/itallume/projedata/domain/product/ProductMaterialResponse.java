@@ -2,11 +2,12 @@ package com.itallume.projedata.domain.product;
 
 import com.itallume.projedata.domain.rawMaterial.UnitOfMeasurement;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-public class productMaterialResponse {
+@Data
+public class ProductMaterialResponse {
 
     private Long id;
     private Long materialId;

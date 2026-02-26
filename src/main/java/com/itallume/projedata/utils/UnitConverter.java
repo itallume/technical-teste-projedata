@@ -11,7 +11,7 @@ public class UnitConverter {
     private static final BigDecimal MILLILITERS_IN_LITER = BigDecimal.valueOf(1000.0);
     private static final BigDecimal MILLILITERS_IN_CUBIC_METER = BigDecimal.valueOf(1_000_000.0);
 
-    public static UnitOfMeasurement bestUnit(MeasurementType type, BigDecimal quantityInBaseUnit) {
+    public static UnitOfMeasurement bestUnitForDisplay(MeasurementType type, BigDecimal quantityInBaseUnit) {
         return switch (type) {
             case WEIGHT -> _bestUnitOfMeasurementForWeight(quantityInBaseUnit);
             case VOLUME -> _bestUnitOfMeasurementForVolume(quantityInBaseUnit);

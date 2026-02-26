@@ -16,6 +16,6 @@ public class ProductResponse {
     private String code;
     private String name;
     private BigDecimal value;
-    private List<ProductMaterial> productMaterials = new ArrayList<>();
+    private List<ProductMaterialResponse> productMaterials = new ArrayList<>();
 }
 

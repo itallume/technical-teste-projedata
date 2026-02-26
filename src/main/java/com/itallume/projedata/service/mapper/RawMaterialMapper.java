@@ -17,7 +17,7 @@ public class RawMaterialMapper {
         return rawMaterial;
     }
 
-    public RawMaterialResponse toResponse(RawMaterial rawMaterial, UnitOfMeasurement unitOfMeasurement) {
+    public RawMaterialResponse toResponse(RawMaterial rawMaterial) {
         RawMaterialResponse response = new RawMaterialResponse();
         response.setId(rawMaterial.getId());
         response.setName(rawMaterial.getName());
