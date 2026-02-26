@@ -74,13 +74,10 @@ public class RawMaterial {
         return unit.fromBase(this.stockQuantityInBaseUnit);
     }
 
-    public BigDecimal getStockQuantityInBaseUnit() {
-        return stockQuantityInBaseUnit;
+    public void setStockWithUnitOfMeasurement(BigDecimal stockQuantity, UnitOfMeasurement unit) {
+        if (unit.getType() != measurementType){
+            throw new IllegalArgumentException("Unit of measurement type does not match raw material measurement type");
+        }
+        this.stockQuantityInBaseUnit = unit.toBase(stockQuantity);
     }
-
-    public void setStockQuantityInBaseUnit(BigDecimal stockQuantityInBaseUnit) {
-        this.stockQuantityInBaseUnit = stockQuantityInBaseUnit;
-    }
-
-
 }

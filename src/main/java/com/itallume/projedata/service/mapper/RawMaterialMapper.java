@@ -22,7 +22,8 @@ public class RawMaterialMapper {
         response.setId(rawMaterial.getId());
         response.setName(rawMaterial.getName());
         response.setCode(rawMaterial.getCode());
-        response.setStockQuantity(rawMaterial.getStockWithUnitOfMeasurement(unitOfMeasurement));
+        UnitOfMeasurement unitOfMeasurement = rawMaterial.getBestUnitForDisplay();
+        response.setStockQuantity(rawMaterial.getStockQuantityForDisplay(unitOfMeasurement));
         response.setUnitOfMeasurement(unitOfMeasurement);
         return response;
     }

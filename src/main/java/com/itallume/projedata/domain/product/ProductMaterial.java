@@ -81,4 +81,20 @@ public class ProductMaterial {
         }
         return unit.fromBase(this.quantityInBaseUnit);
     }
+
+    public void setQuantityWithUnitOfMeasurement(BigDecimal stockQuantity, UnitOfMeasurement unit) {
+        if (unit.getType() != rawMaterial.getMeasurementType()){
+            throw new IllegalArgumentException("Unit of measurement type does not match raw material measurement type");
+        }
+        this.quantityInBaseUnit = unit.toBase(stockQuantity);
+    }
+
+    public BigDecimal getStockQuantityForDisplay(UnitOfMeasurement unit) {
+        if (unit.getType() != rawMaterial.getMeasurementType()){
+            throw new IllegalArgumentException("Unit of measurement type does not match raw material measurement type");
+        }
+        return unit.fromBase(this.quantityInBaseUnit);
+    }
+
+
 }

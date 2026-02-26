@@ -4,6 +4,7 @@ package com.itallume.projedata.service;
 import com.itallume.projedata.domain.rawMaterial.RawMaterial;
 import com.itallume.projedata.domain.rawMaterial.RawMaterialRequest;
 import com.itallume.projedata.domain.rawMaterial.RawMaterialResponse;
+import com.itallume.projedata.domain.rawMaterial.UnitOfMeasurement;
 import com.itallume.projedata.repository.RawMaterialRepository;
 import com.itallume.projedata.service.mapper.RawMaterialMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,17 @@ public class RawMaterialService {
 
         RawMaterial rawMaterial = _rawMaterialMapper.toEntity(rawMaterialRequest);
 
+        rawMaterial.setStockWithUnitOfMeasurement(rawMaterialRequest.getStockQuantity(), rawMaterialRequest.getUnitOfMeasurement());
+
         rawMaterial = _rawMaterialRepository.save(rawMaterial);
 
-        return _rawMaterialMapper.toResponse(rawMaterial, rawMaterialRequest.getUnitOfMeasurement());
+        return _rawMaterialMapper.toResponse(rawMaterial);
     }
 
     public RawMaterialResponse getRawMaterialById(Long id) {
         RawMaterial rawMaterial = _rawMaterialRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Raw material not found with id: " + id));
-        return _rawMaterialMapper.toResponse(rawMaterial, rawMaterial.getBestUnitForDisplay());
+        return _rawMaterialMapper.toResponse(rawMaterial);
     }
 
     public RawMaterialResponse updateRawMaterial(Long id, RawMaterialRequest rawMaterialRequest) {
@@ -50,10 +53,10 @@ public class RawMaterialService {
 
         rawMaterial.setName(rawMaterialRequest.getName());
         rawMaterial.setCode(rawMaterialRequest.getCode());
-        rawMaterial.setStockWithUnitOfMeasurement(rawMaterialRequest.getStockQuantity(), rawMaterialRequest.getUnitOfMeasurement());
+        rawMaterial.setStockWithUnitOfMeasurement(rawMaterialRequest.getStockQuantity() ,rawMaterialRequest.getUnitOfMeasurement());
 
         rawMaterial = _rawMaterialRepository.save(rawMaterial);
-        return _rawMaterialMapper.toResponse(rawMaterial, rawMaterial.getBestUnitForDisplay());
+        return _rawMaterialMapper.toResponse(rawMaterial);
     }
 
     public void deleteRawMaterial(Long id) {
