@@ -47,6 +47,9 @@ public class ProductService {
         return productMapper.toResponse(product);
     }
 
+    public void deleteProduct(Long id){
+        productRepository.deleteById(id);
+    }
 
     public void attachMaterialsToProduct(Product product, List<ProductMaterialRequest> productMaterialRequests) {
         for (ProductMaterialRequest materialRequest : productMaterialRequests) {
