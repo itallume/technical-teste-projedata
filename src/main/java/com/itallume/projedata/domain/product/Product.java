@@ -51,10 +51,13 @@ public class Product {
         ProductMaterial productMaterial = new ProductMaterial();
         productMaterial.setProduct(this);
         productMaterial.setRawMaterial(rawMaterial);
-        productMaterial.setUnitOfMeasurement(unitOfMeasurement);
-        productMaterial.setQuantity(quantity);
+        productMaterial.setQuantityWithUnitOfMeasurement(quantity, unitOfMeasurement);
 
         this.productMaterials.add(productMaterial);
+    }
+
+    public void clearMaterials(){
+        productMaterials.clear();
     }
 
     public void removeProductMaterial(ProductMaterial productMaterial){
