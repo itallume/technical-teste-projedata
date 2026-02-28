@@ -26,15 +26,19 @@ public class ProductMapper {
 
         List<ProductMaterialResponse> materialResponses = new ArrayList<>();
         for (ProductMaterial material : product.getProductMaterials()) {
-            ProductMaterialResponse materialResponse = new ProductMaterialResponse();
-            materialResponse.setMaterialId(material.getRawMaterial().getId());
-            UnitOfMeasurement unitOfMeasurement = material.getBestUnitForDisplay();
-            materialResponse.setQuantity(material.getQuantityForDisplay(unitOfMeasurement));
-            materialResponse.setUnitOfMeasurement(unitOfMeasurement);
-            materialResponses.add(materialResponse);
+            materialResponses.add(toProductMaterialResponse(material));
         }
         response.setProductMaterials(materialResponses);
 
         return response;
+    }
+
+    public ProductMaterialResponse toProductMaterialResponse(ProductMaterial productMaterial){
+        ProductMaterialResponse productMaterialResponse = new ProductMaterialResponse();
+        productMaterialResponse.setMaterialId(productMaterial.getRawMaterial().getId());
+        UnitOfMeasurement unitOfMeasurement = productMaterial.getBestUnitForDisplay();
+        productMaterialResponse.setQuantity(productMaterial.getQuantityForDisplay(unitOfMeasurement));
+        productMaterialResponse.setUnitOfMeasurement(unitOfMeasurement);
+        return productMaterialResponse;
     }
 }
