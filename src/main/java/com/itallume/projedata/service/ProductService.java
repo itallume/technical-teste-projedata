@@ -51,6 +51,10 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public List<Product> getAllProducts(){
+        return productRepository.findAll();
+    }
+
     public void attachMaterialsToProduct(Product product, List<ProductMaterialRequest> productMaterialRequests) {
         for (ProductMaterialRequest materialRequest : productMaterialRequests) {
             RawMaterial rawMaterial = rawMaterialRepository.findById(materialRequest.getMaterialId())
